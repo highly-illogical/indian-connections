@@ -1,0 +1,371 @@
+import { useState } from "react";
+
+const puzzleModules = import.meta.glob("../puzzles/*.json", { eager: true });
+const PUZZLES = Object.keys(puzzleModules)
+  .sort()
+  .map(k => puzzleModules[k].default ?? puzzleModules[k]);
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const DIFF_LABELS = ["🟡 Seedha Saadha", "🟢 Theek Hai", "🔵 Thoda Mushkil", "🟣 Bahut Mushkil"];
+
+const EPOCH = new Date(2026, 4, 22); // May 22 2026 = puzzle 1
+
+function getTodayPuzzleIdx() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.floor((today - EPOCH) / (1000 * 60 * 60 * 24));
+  return ((days % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
+}
+
+// ─── GLOBAL CSS ──────────────────────────────────────────────────────────────
+
+const CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&family=Yatra+One&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    15%{transform:translateX(-11px)}
+    30%{transform:translateX(11px)}
+    45%{transform:translateX(-8px)}
+    60%{transform:translateX(8px)}
+    75%{transform:translateX(-4px)}
+    90%{transform:translateX(4px)}
+  }
+  @keyframes pop {
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.04)}
+  }
+  @keyframes slideDown {
+    from{opacity:0;transform:translateY(-16px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes toastIn {
+    from{opacity:0;transform:translate(-50%,-10px) scale(0.93)}
+    to{opacity:1;transform:translate(-50%,0) scale(1)}
+  }
+  @keyframes fadeUp {
+    from{opacity:0;transform:translateY(22px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  .slide-in { animation: slideDown 0.38s cubic-bezier(.22,.68,0,1.2); }
+  .toast-anim { animation: toastIn 0.22s ease; }
+  .fade-up { animation: fadeUp 0.48s ease; }
+
+  .card-btn { transition: all 0.15s ease !important; }
+  .card-btn:hover {
+    transform: translateY(-4px) scale(1.03) !important;
+    box-shadow: 0 8px 24px rgba(139,26,26,0.2) !important;
+    border-color: #FF9933 !important;
+    background: #FFF0CC !important;
+  }
+  .card-btn:active { transform: scale(0.96) !important; }
+
+  .pill-btn { transition: all 0.14s ease !important; }
+  .pill-btn:hover { filter: brightness(1.08); }
+  .pill-btn:active { transform: scale(0.95) !important; }
+
+  .tile-btn { transition: background 0.1s, border-color 0.1s, transform 0.12s, box-shadow 0.12s !important; }
+  .tile-btn:hover { filter: brightness(0.93); }
+  @media (max-width: 400px) {
+    .tile-btn { font-size: 11px !important; min-height: 56px !important; }
+  }
+
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 18px;
+  }
+`;
+
+// ─── APP ─────────────────────────────────────────────────────────────────────
+
+export default function App() {
+  const [screen, setScreen] = useState("home");
+  const [pidx, setPidx] = useState(0);
+  const [tiles, setTiles] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [solved, setSolved] = useState([]);
+  const [mistakes, setMistakes] = useState(0);
+  const [anim, setAnim] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [won, setWon] = useState(false);
+
+  const puzzle = PUZZLES[pidx];
+  const MAX_ERR = 4;
+
+  const isSolved = item => solved.some(c => c.items.includes(item));
+
+  function showToast(text, good) {
+    setToast({ text, good });
+    setTimeout(() => setToast(null), 2600);
+  }
+
+  function startGame(i) {
+    setPidx(i);
+    setTiles(shuffle(PUZZLES[i].categories.flatMap(c => c.items)));
+    setSelected([]);
+    setSolved([]);
+    setMistakes(0);
+    setAnim(null);
+    setToast(null);
+    setWon(false);
+    setScreen("game");
+  }
+
+  function toggle(item) {
+    if (anim || isSolved(item)) return;
+    setSelected(p =>
+      p.includes(item) ? p.filter(x => x !== item) : p.length < 4 ? [...p, item] : p
+    );
+  }
+
+  function submit() {
+    if (selected.length !== 4 || anim) return;
+    const match = puzzle.categories.find(c =>
+      selected.every(s => c.items.includes(s)) && c.items.every(i => selected.includes(i))
+    );
+    if (match && !solved.find(s => s.name === match.name)) {
+      setAnim("pop");
+      setTimeout(() => {
+        setAnim(null);
+        const ns = [...solved, match];
+        setSolved(ns);
+        setSelected([]);
+        if (ns.length === 4) { setWon(true); setScreen("end"); }
+        else {
+          const msgs = ["Wah wah! 🎉", "Bilkul sahi! ✨", "Bahut achha! 🙌"];
+          showToast(msgs[ns.length - 1] || "Sahi! 🎊", true);
+        }
+      }, 520);
+    } else {
+      const oneAway = puzzle.categories.some(c =>
+        selected.filter(s => c.items.includes(s)).length === 3
+      );
+      const nm = mistakes + 1;
+      setMistakes(nm);
+      setAnim("shake");
+      showToast(
+        oneAway ? "Ek se chook gaye! Dobara socho 😅" : "Nahi yaar! Phir try karo 🙈",
+        false
+      );
+      setTimeout(() => {
+        setAnim(null);
+        setSelected([]);
+        if (nm >= MAX_ERR) setTimeout(() => { setWon(false); setScreen("end"); }, 420);
+      }, 660);
+    }
+  }
+
+  const activeTiles = tiles.filter(t => !isSolved(t));
+
+  const base = {
+    minHeight: "100vh",
+    background: "linear-gradient(160deg, #FEF3DC 0%, #FCE5C0 100%)",
+    display: "flex", flexDirection: "column", alignItems: "center",
+    padding: "36px 24px 64px",
+    fontFamily: "'Mukta', sans-serif",
+    position: "relative",
+  };
+
+  // ─── HOME ─────────────────────────────────────────────────────────────────
+  if (screen === "home") return (
+    <>
+      <style>{CSS}</style>
+      <div style={base}>
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 6 }}>🕉️</div>
+          <h1 style={{ fontFamily: "'Yatra One', cursive", fontSize: 52, color: "#8B1A1A", margin: 0, lineHeight: 1 }}>
+            Connections
+          </h1>
+          <p style={{ color: "#A05430", fontSize: 21, fontWeight: 700, margin: "6px 0 10px" }}>
+            कनेक्शन्स
+          </p>
+          <p style={{ color: "#7A5C30", fontSize: 16, maxWidth: 460, margin: "0 auto", lineHeight: 1.65 }}>
+            16 tiles, 4 chhuppe groups. Lekin <b>bahut saare words do jagah fit lagte hain</b> — wahi toh maza hai!
+          </p>
+        </div>
+
+        <div style={{ background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14, padding: "14px 20px", maxWidth: 520, marginBottom: 28, fontSize: 15, color: "#6B4226", lineHeight: 1.75, textAlign: "center" }}>
+          <b>Kaise khelein?</b> 4 tiles chunke <b>Submit</b> karo. Ek galati = ek ❤️ khatam. 4 galatiyan = game over!
+        </div>
+
+        <button className="pill-btn" onClick={() => startGame(getTodayPuzzleIdx())} style={{
+          background: "#8B1A1A", color: "#FFDB80", border: "none",
+          borderRadius: 30, padding: "14px 48px", fontFamily: "'Mukta'", fontWeight: 700,
+          fontSize: 20, cursor: "pointer", marginBottom: 28,
+        }}>Khelo ▶</button>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
+          {DIFF_LABELS.map(d => (
+            <span key={d} style={{ background: "#FFF8EE", border: "1px solid #E0C890", borderRadius: 20, padding: "4px 13px", color: "#7A5C30", fontSize: 13, fontWeight: 600 }}>{d}</span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+
+  // ─── END ──────────────────────────────────────────────────────────────────
+  if (screen === "end") return (
+    <>
+      <style>{CSS}</style>
+      <div style={{ ...base, justifyContent: "center", textAlign: "center" }}>
+        <div className="fade-up">
+          <div style={{ fontSize: 90, lineHeight: 1, marginBottom: 12 }}>{won ? "🎊" : "😔"}</div>
+          <h2 style={{ fontFamily: "'Yatra One', cursive", fontSize: 38, color: "#8B1A1A", margin: "0 0 8px" }}>
+            {won ? "Bahut Badiya!" : "Agli Baar!"}
+          </h2>
+          <p style={{ color: "#7A5C30", marginBottom: 28, fontSize: 16, lineHeight: 1.6 }}>
+            {won
+              ? `Sirf ${mistakes} galati${mistakes === 1 ? "" : "yan"} ke saath — zabardast! 🌟`
+              : "4 galatiyon ke baad game over. Tricky the na? 😄"}
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 32, maxWidth: 640, width: "100%" }}>
+            {puzzle.categories.map((cat, i) => {
+              const wasSolved = solved.some(s => s.name === cat.name);
+              return (
+                <div key={i} style={{
+                  background: cat.bg, color: cat.fg, borderRadius: 12,
+                  padding: "14px 22px", opacity: wasSolved ? 1 : 0.35,
+                  textAlign: "center",
+                }}>
+                  <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 3 }}>{cat.name}</div>
+                  <div style={{ fontSize: 15 }}>{cat.items.join(" · ")}</div>
+                  <div style={{ fontSize: 13, opacity: 0.85, marginTop: 4, fontStyle: "italic" }}>{cat.hindi}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div style={{ display: "flex", gap: 14, justifyContent: "center" }}>
+            <button className="pill-btn" onClick={() => setScreen("home")} style={{
+              background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
+              borderRadius: 30, padding: "12px 26px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer",
+            }}>← Ghar Wapas</button>
+            <button className="pill-btn" onClick={() => startGame(pidx)} style={{
+              background: "#8B1A1A", color: "#FFDB80", border: "none",
+              borderRadius: 30, padding: "12px 28px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer",
+            }}>Phir Khelo 🔄</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  // ─── GAME ─────────────────────────────────────────────────────────────────
+  return (
+    <>
+      <style>{CSS}</style>
+      <div style={base}>
+        {toast && (
+          <div className="toast-anim" style={{
+            position: "fixed", top: 22, left: "50%", transform: "translateX(-50%)",
+            background: toast.good ? "#2E7D32" : "#B71C1C",
+            color: "#fff", padding: "11px 28px", borderRadius: 30,
+            fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, zIndex: 999,
+            whiteSpace: "nowrap", boxShadow: "0 4px 20px rgba(0,0,0,0.25)",
+          }}>{toast.text}</div>
+        )}
+
+        {/* Header */}
+        <div style={{ width: "100%", maxWidth: 640, display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+          <button onClick={() => setScreen("home")} style={{ background: "none", border: "none", color: "#8B1A1A", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer", padding: 0 }}>
+            ← Wapas
+          </button>
+          <div style={{ textAlign: "center" }}>
+            <span style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 24 }}>{puzzle.title}</span>
+          </div>
+          <div style={{ width: 80 }} />
+        </div>
+
+        {/* Solved banners */}
+        <div style={{ width: "100%", maxWidth: 640, display: "flex", flexDirection: "column", gap: 8, marginBottom: solved.length ? 10 : 0 }}>
+          {solved.map((cat, i) => (
+            <div key={i} className="slide-in" style={{ background: cat.bg, color: cat.fg, borderRadius: 10, padding: "11px 20px", textAlign: "center" }}>
+              <div style={{ fontWeight: 800, fontSize: 15 }}>{cat.name}</div>
+              <div style={{ fontSize: 14 }}>{cat.items.join(" · ")}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Tile grid */}
+        <div
+          className="game-grid"
+          style={{ animation: anim === "shake" ? "shake 0.66s" : anim === "pop" ? "pop 0.52s" : "none" }}
+        >
+          {activeTiles.map(item => {
+            const sel = selected.includes(item);
+            const len = item.replace(/\s/g, "").length;
+            const fs = len > 11 ? 13 : len > 8 ? 15 : len > 6 ? 17 : 19;
+            return (
+              <button
+                key={item}
+                className="tile-btn"
+                onClick={() => toggle(item)}
+                style={{
+                  background: sel ? "#3A2000" : "#FFF8EE",
+                  color: sel ? "#FFDB80" : "#3A2000",
+                  border: `2px solid ${sel ? "#FF9933" : "#DFCCA0"}`,
+                  borderRadius: 10, padding: "10px 6px", minHeight: 80,
+                  fontFamily: "'Mukta', sans-serif", fontWeight: 700, fontSize: fs,
+                  cursor: "pointer", lineHeight: 1.25, wordBreak: "break-word",
+                  transform: sel ? "scale(1.05)" : "scale(1)",
+                  boxShadow: sel ? "0 3px 10px rgba(255,153,51,0.45)" : "0 1px 3px rgba(0,0,0,0.07)",
+                }}
+              >
+                {item}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Mistake dots */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+          <span style={{ color: "#7A5C30", fontSize: 15, fontWeight: 600 }}>Galatiyan:</span>
+          {Array.from({ length: MAX_ERR }).map((_, i) => (
+            <div key={i} style={{
+              width: 20, height: 20, borderRadius: "50%",
+              background: i < mistakes ? "#B71C1C" : "#E0C898",
+              transition: "background 0.3s, transform 0.2s",
+              transform: i === mistakes - 1 ? "scale(1.3)" : "scale(1)",
+            }} />
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+          <button className="pill-btn" onClick={() => setSelected([])} style={{
+            background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
+            borderRadius: 30, padding: "11px 24px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 15, cursor: "pointer",
+          }}>Hatao ✕</button>
+          <button className="pill-btn" onClick={() => setTiles(t => shuffle([...t]))} style={{
+            background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
+            borderRadius: 30, padding: "11px 24px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 15, cursor: "pointer",
+          }}>Shuffle 🔀</button>
+          <button className="pill-btn" onClick={submit} style={{
+            background: selected.length === 4 ? "#8B1A1A" : "#C9AA7C",
+            color: selected.length === 4 ? "#FFDB80" : "#fff", border: "none",
+            borderRadius: 30, padding: "11px 30px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16,
+            cursor: selected.length === 4 ? "pointer" : "default", transition: "background 0.2s",
+          }}>Submit ✓</button>
+        </div>
+      </div>
+    </>
+  );
+}
