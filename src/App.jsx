@@ -18,7 +18,7 @@ function shuffle(arr) {
 
 const DIFF_LABELS = ["🟡 Seedha Saadha", "🟢 Theek Hai", "🔵 Thoda Mushkil", "🟣 Bahut Mushkil"];
 
-const EPOCH = new Date(2026, 4, 22); // May 22 2026 = puzzle 1
+const EPOCH = new Date(2026, 4, 19); // May 19 2026 → puzzle 4 lands on May 22
 
 function getTodayPuzzleIdx() {
   const now = new Date();
@@ -98,6 +98,7 @@ const CSS = `
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [pidx, setPidx] = useState(0);
+  const todayIdx = getTodayPuzzleIdx();
   const [tiles, setTiles] = useState([]);
   const [selected, setSelected] = useState([]);
   const [solved, setSolved] = useState([]);
@@ -205,16 +206,61 @@ export default function App() {
           <b>Kaise khelein?</b> 4 tiles chunke <b>Submit</b> karo. Ek galati = ek ❤️ khatam. 4 galatiyan = game over!
         </div>
 
-        <button className="pill-btn" onClick={() => startGame(getTodayPuzzleIdx())} style={{
-          background: "#8B1A1A", color: "#FFDB80", border: "none",
-          borderRadius: 30, padding: "14px 48px", fontFamily: "'Mukta'", fontWeight: 700,
-          fontSize: 20, cursor: "pointer", marginBottom: 28,
-        }}>Khelo ▶</button>
+        <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap", justifyContent: "center" }}>
+          <button className="pill-btn" onClick={() => startGame(todayIdx)} style={{
+            background: "#8B1A1A", color: "#FFDB80", border: "none",
+            borderRadius: 30, padding: "14px 48px", fontFamily: "'Mukta'", fontWeight: 700,
+            fontSize: 20, cursor: "pointer",
+          }}>Khelo ▶</button>
+          <button className="pill-btn" onClick={() => setScreen("archive")} style={{
+            background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
+            borderRadius: 30, padding: "14px 24px", fontFamily: "'Mukta'", fontWeight: 700,
+            fontSize: 18, cursor: "pointer",
+          }}>📚 Purane</button>
+        </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
           {DIFF_LABELS.map(d => (
             <span key={d} style={{ background: "#FFF8EE", border: "1px solid #E0C890", borderRadius: 20, padding: "4px 13px", color: "#7A5C30", fontSize: 13, fontWeight: 600 }}>{d}</span>
           ))}
+        </div>
+      </div>
+    </>
+  );
+
+  // ─── ARCHIVE ──────────────────────────────────────────────────────────────
+  if (screen === "archive") return (
+    <>
+      <style>{CSS}</style>
+      <div style={base}>
+        <div style={{ width: "100%", maxWidth: 520 }}>
+          <button onClick={() => setScreen("home")} style={{ background: "none", border: "none", color: "#8B1A1A", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer", padding: 0, marginBottom: 20 }}>
+            ← Wapas
+          </button>
+          <h2 style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 32, margin: "0 0 6px" }}>Purane Puzzles</h2>
+          <p style={{ color: "#7A5C30", fontSize: 15, margin: "0 0 24px" }}>Woh puzzles jo aap miss kar gaye 😄</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {PUZZLES.map((p, i) => {
+              if (i === todayIdx) return null;
+              return (
+                <div key={i} className="card-btn" onClick={() => startGame(i)} style={{
+                  background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14,
+                  padding: "18px 22px", cursor: "pointer", display: "flex", alignItems: "center", gap: 16,
+                }}>
+                  <span style={{ fontSize: 36, lineHeight: 1 }}>{p.emoji}</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 20, marginBottom: 4 }}>{p.titleEn}</div>
+                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                      {p.categories.map((c, j) => (
+                        <span key={j} style={{ display: "inline-block", width: 14, height: 14, borderRadius: "50%", background: c.bg }} />
+                      ))}
+                    </div>
+                  </div>
+                  <span style={{ color: "#8B1A1A", fontSize: 20, fontWeight: 700 }}>▶</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
