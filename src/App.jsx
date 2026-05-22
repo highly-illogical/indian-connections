@@ -1,9 +1,6 @@
 import { useState } from "react";
 
-const puzzleModules = import.meta.glob("../puzzles/*.json", { eager: true });
-const PUZZLES = Object.keys(puzzleModules)
-  .sort()
-  .map(k => puzzleModules[k].default ?? puzzleModules[k]);
+import PUZZLES from "../puzzles.json";
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 
