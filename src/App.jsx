@@ -93,6 +93,39 @@ const CSS = `
   }
 `;
 
+// ─── SHARE ───────────────────────────────────────────────────────────────────
+
+const CAT_EMOJI = ["🟨", "🟩", "🟦", "🟪"];
+
+function ShareButton({ puzzle, guessHistory, won, mistakes, showToast }) {
+  function buildText() {
+    const itemToCat = {};
+    puzzle.categories.forEach((c, i) => c.items.forEach(item => { itemToCat[item] = i; }));
+    const grid = guessHistory.map(guess =>
+      guess.map(item => CAT_EMOJI[itemToCat[item]] ?? "⬜").join("")
+    ).join("\n");
+    const result = won
+      ? `Jeet gaye! ${mistakes === 0 ? "Ek bhi galati nahi 🤩" : `Sirf ${mistakes} galati${mistakes === 1 ? "" : "yan"} 🌟`}`
+      : "Game over 😔";
+    return `Indian Connections 🕉️\n${puzzle.titleEn} ${puzzle.emoji}\n${result}\n\n${grid}`;
+  }
+
+  function share() {
+    navigator.clipboard.writeText(buildText()).then(
+      () => showToast("Clipboard mein copy ho gaya! 📋", true),
+      () => showToast("Copy nahi hua 😕", false),
+    );
+  }
+
+  return (
+    <button className="pill-btn" onClick={share} style={{
+      background: "#8B1A1A", color: "#FFDB80", border: "none",
+      borderRadius: 30, padding: "12px 28px", fontFamily: "'Mukta'", fontWeight: 700,
+      fontSize: 16, cursor: "pointer",
+    }}>Share karo 📤</button>
+  );
+}
+
 // ─── APP ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -106,6 +139,7 @@ export default function App() {
   const [anim, setAnim] = useState(null);
   const [toast, setToast] = useState(null);
   const [won, setWon] = useState(false);
+  const [guessHistory, setGuessHistory] = useState([]);
 
   const puzzle = PUZZLES[pidx];
   const MAX_ERR = 4;
@@ -126,6 +160,7 @@ export default function App() {
     setAnim(null);
     setToast(null);
     setWon(false);
+    setGuessHistory([]);
     setScreen("game");
   }
 
@@ -138,6 +173,8 @@ export default function App() {
 
   function submit() {
     if (selected.length !== 4 || anim) return;
+    const guess = [...selected];
+    setGuessHistory(h => [...h, guess]);
     const match = puzzle.categories.find(c =>
       selected.every(s => c.items.includes(s)) && c.items.every(i => selected.includes(i))
     );
@@ -299,11 +336,12 @@ export default function App() {
             })}
           </div>
 
-          <div style={{ display: "flex", gap: 14, justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <button className="pill-btn" onClick={() => setScreen("home")} style={{
               background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
               borderRadius: 30, padding: "12px 26px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer",
             }}>← Ghar Wapas</button>
+            <ShareButton puzzle={puzzle} guessHistory={guessHistory} won={won} mistakes={mistakes} showToast={showToast} />
             <button className="pill-btn" onClick={() => startGame(pidx)} style={{
               background: "#8B1A1A", color: "#FFDB80", border: "none",
               borderRadius: 30, padding: "12px 28px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer",
