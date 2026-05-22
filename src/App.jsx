@@ -111,10 +111,15 @@ function ShareButton({ puzzle, guessHistory, won, mistakes, showToast }) {
   }
 
   function share() {
-    navigator.clipboard.writeText(buildText()).then(
-      () => showToast("Clipboard mein copy ho gaya! 📋", true),
-      () => showToast("Copy nahi hua 😕", false),
-    );
+    const text = buildText();
+    if (navigator.share) {
+      navigator.share({ text }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(text).then(
+        () => showToast("Clipboard mein copy ho gaya! 📋", true),
+        () => showToast("Copy nahi hua 😕", false),
+      );
+    }
   }
 
   return (
