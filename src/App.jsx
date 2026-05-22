@@ -280,7 +280,7 @@ export default function App() {
           <p style={{ color: "#7A5C30", fontSize: 15, margin: "0 0 24px" }}>Woh puzzles jo aap miss kar gaye 😄</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             {PUZZLES.map((p, i) => {
-              if (i === todayIdx) return null;
+              if (i >= todayIdx) return null;
               return (
                 <div key={i} className="card-btn" onClick={() => startGame(i)} style={{
                   background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14,
