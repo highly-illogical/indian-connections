@@ -13,7 +13,12 @@ function shuffle(arr) {
   return a;
 }
 
-const DIFF_LABELS = ["🟡 Seedha Saadha", "🟢 Theek Hai", "🔵 Thoda Mushkil", "🟣 Bahut Mushkil"];
+const DIFF_LABELS = [
+  { label: "🟠 Seedha Saadha", bg: "#FAC775", fg: "#633806" },
+  { label: "🟢 Theek Hai",     bg: "#9FE1CB", fg: "#085041" },
+  { label: "🔵 Thoda Mushkil", bg: "#B5D4F4", fg: "#0C447C" },
+  { label: "🟣 Bahut Mushkil", bg: "#CECBF6", fg: "#3C3489" },
+];
 
 const EPOCH = new Date(2026, 4, 19); // May 19 2026 → puzzle 4 lands on May 22
 
@@ -107,7 +112,7 @@ function ShareButton({ puzzle, guessHistory, won, mistakes, showToast }) {
     const result = won
       ? `Jeet gaye! ${mistakes === 0 ? "Ek bhi galati nahi 🤩" : `Sirf ${mistakes} galati${mistakes === 1 ? "" : "yan"} 🌟`}`
       : "Game over 😔";
-    return `Indian Connections 🕉️\n${puzzle.titleEn}\n${result}\n\n${grid}`;
+    return `कnnecशns\n${puzzle.titleEn}\n${result}\n\n${grid}`;
   }
 
   function share() {
@@ -232,40 +237,36 @@ export default function App() {
   if (screen === "home") return (
     <>
       <style>{CSS}</style>
-      <div style={base}>
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 6 }}>🕉️</div>
-          <h1 style={{ fontFamily: "'Yatra One', cursive", fontSize: 52, color: "#8B1A1A", margin: 0, lineHeight: 1 }}>
-            Connections
+      <div style={{ ...base, justifyContent: "center" }}>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <h1 style={{ fontFamily: "'Yatra One', cursive", fontSize: 72, color: "#8B1A1A", margin: "0 0 16px", lineHeight: 1 }}>
+            कnnecशns
           </h1>
-          <p style={{ color: "#A05430", fontSize: 21, fontWeight: 700, margin: "6px 0 10px" }}>
-            कनेक्शन्स
-          </p>
-          <p style={{ color: "#7A5C30", fontSize: 16, maxWidth: 460, margin: "0 auto", lineHeight: 1.65 }}>
+          <p style={{ color: "#7A5C30", fontSize: 16, maxWidth: 460, margin: "0 auto", lineHeight: 1.75 }}>
             16 tiles, 4 chhuppe groups. Lekin <b>bahut saare words do jagah fit lagte hain</b> — wahi toh maza hai!
           </p>
         </div>
 
-        <div style={{ background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14, padding: "14px 20px", maxWidth: 520, marginBottom: 28, fontSize: 15, color: "#6B4226", lineHeight: 1.75, textAlign: "center" }}>
-          <b>Kaise khelein?</b> 4 tiles chunke <b>Submit</b> karo. Ek galati = ek ❤️ khatam. 4 galatiyan = game over!
+        <div style={{ background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14, padding: "18px 28px", maxWidth: 520, width: "100%", marginBottom: 36, fontSize: 15, color: "#6B4226", lineHeight: 1.85, textAlign: "center" }}>
+          <b>Kaise khelein?</b> 4 tiles chunke <b>Submit</b> karo. Ek galati = ek 🔴 khatam. 4 galatiyan = game over!
         </div>
 
-        <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap", justifyContent: "center" }}>
+        <div style={{ display: "flex", gap: 16, marginBottom: 36, flexWrap: "wrap", justifyContent: "center" }}>
           <button className="pill-btn" onClick={() => startGame(todayIdx)} style={{
             background: "#8B1A1A", color: "#FFDB80", border: "none",
-            borderRadius: 30, padding: "14px 48px", fontFamily: "'Mukta'", fontWeight: 700,
-            fontSize: 20, cursor: "pointer",
+            borderRadius: 30, padding: "10px 32px", fontFamily: "'Mukta'", fontWeight: 700,
+            fontSize: 17, cursor: "pointer",
           }}>Khelo ▶</button>
           <button className="pill-btn" onClick={() => setScreen("archive")} style={{
             background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
-            borderRadius: 30, padding: "14px 24px", fontFamily: "'Mukta'", fontWeight: 700,
-            fontSize: 18, cursor: "pointer",
+            borderRadius: 30, padding: "10px 20px", fontFamily: "'Mukta'", fontWeight: 700,
+            fontSize: 16, cursor: "pointer",
           }}>📚 Purane</button>
         </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
           {DIFF_LABELS.map(d => (
-            <span key={d} style={{ background: "#FFF8EE", border: "1px solid #E0C890", borderRadius: 20, padding: "4px 13px", color: "#7A5C30", fontSize: 13, fontWeight: 600 }}>{d}</span>
+            <span key={d.label} style={{ background: d.bg, borderRadius: 20, padding: "6px 16px", color: d.fg, fontSize: 13, fontWeight: 600 }}>{d.label}</span>
           ))}
         </div>
       </div>
