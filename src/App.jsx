@@ -88,6 +88,9 @@ const CSS = `
     max-width: 640px;
     margin-bottom: 18px;
   }
+  @media (max-width: 480px) {
+    .game-grid { gap: 5px; }
+  }
 `;
 
 // ─── SHARE ───────────────────────────────────────────────────────────────────
@@ -104,7 +107,7 @@ function ShareButton({ puzzle, guessHistory, won, mistakes, showToast }) {
     const result = won
       ? `Jeet gaye! ${mistakes === 0 ? "Ek bhi galati nahi 🤩" : `Sirf ${mistakes} galati${mistakes === 1 ? "" : "yan"} 🌟`}`
       : "Game over 😔";
-    return `Indian Connections 🕉️\n${puzzle.titleEn} ${puzzle.emoji}\n${result}\n\n${grid}`;
+    return `Indian Connections 🕉️\n${puzzle.titleEn}\n${result}\n\n${grid}`;
   }
 
   function share() {
@@ -129,6 +132,8 @@ function ShareButton({ puzzle, guessHistory, won, mistakes, showToast }) {
 }
 
 // ─── APP ─────────────────────────────────────────────────────────────────────
+
+const DEV = import.meta.env.DEV;
 
 export default function App() {
   const [screen, setScreen] = useState("home");
@@ -280,13 +285,12 @@ export default function App() {
           <p style={{ color: "#7A5C30", fontSize: 15, margin: "0 0 24px" }}>Woh puzzles jo aap miss kar gaye 😄</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             {PUZZLES.map((p, i) => {
-              if (i >= todayIdx) return null;
+              if (!DEV && i >= todayIdx) return null;
               return (
                 <div key={i} className="card-btn" onClick={() => startGame(i)} style={{
                   background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14,
                   padding: "18px 22px", cursor: "pointer", display: "flex", alignItems: "center", gap: 16,
                 }}>
-                  <span style={{ fontSize: 36, lineHeight: 1 }}>{p.emoji}</span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 20, marginBottom: 4 }}>{p.titleEn}</div>
                     <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -322,20 +326,17 @@ export default function App() {
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 32, maxWidth: 640, width: "100%" }}>
-            {puzzle.categories.map((cat, i) => {
-              const wasSolved = solved.some(s => s.name === cat.name);
-              return (
+            {puzzle.categories.map((cat, i) => (
                 <div key={i} style={{
                   background: cat.bg, color: cat.fg, borderRadius: 12,
-                  padding: "14px 22px", opacity: wasSolved ? 1 : 0.35,
+                  padding: "14px 22px",
                   textAlign: "center",
                 }}>
                   <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 3 }}>{cat.name}</div>
                   <div style={{ fontSize: 15 }}>{cat.items.join(" · ")}</div>
                   <div style={{ fontSize: 13, opacity: 0.85, marginTop: 4, fontStyle: "italic" }}>{cat.hindi}</div>
                 </div>
-              );
-            })}
+            ))}
           </div>
 
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
@@ -408,9 +409,9 @@ export default function App() {
                   background: sel ? "#3A2000" : "#FFF8EE",
                   color: sel ? "#FFDB80" : "#3A2000",
                   border: `2px solid ${sel ? "#FF9933" : "#DFCCA0"}`,
-                  borderRadius: 10, padding: "10px 6px", minHeight: 80,
+                  borderRadius: 10, padding: "4px 4px", minHeight: 64,
                   fontFamily: "'Mukta', sans-serif", fontWeight: 700, fontSize: fs,
-                  cursor: "pointer", lineHeight: 1.25, wordBreak: "break-word",
+                  cursor: "pointer", lineHeight: 1.25,
                   transform: sel ? "scale(1.05)" : "scale(1)",
                   boxShadow: sel ? "0 3px 10px rgba(255,153,51,0.45)" : "0 1px 3px rgba(0,0,0,0.07)",
                 }}

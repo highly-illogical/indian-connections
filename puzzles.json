@@ -2,176 +2,273 @@
   {
     "title": "Puzzle 1",
     "titleEn": "Puzzle 1",
-    "emoji": "📖",
     "categories": [
       {
         "name": "All mean LOVE",
         "hindi": "चारों का मतलब 'प्यार' है",
         "items": ["Pyaar", "Mohabbat", "Ishq", "Prem"],
-        "bg": "#C8961A",
-        "fg": "#3A2000"
+        "bg": "#FAC775",
+        "fg": "#633806"
       },
       {
         "name": "All mean FIRE",
         "hindi": "चारों का मतलब 'आग' है",
         "items": ["Aag", "Agni", "Jwala", "Aanch"],
-        "bg": "#4D9A2E",
-        "fg": "#fff"
+        "bg": "#9FE1CB",
+        "fg": "#085041"
       },
       {
         "name": "All mean SKY",
         "hindi": "चारों का मतलब 'आसमान' है",
         "items": ["Aasmaan", "Ambar", "Gagan", "Nabh"],
-        "bg": "#2B5EC7",
-        "fg": "#fff"
+        "bg": "#B5D4F4",
+        "fg": "#0C447C"
       },
       {
         "name": "Hindi idioms used to mean HEART",
         "hindi": "दिल के लिए इस्तेमाल होते हैं — idiom में",
         "items": ["Dil", "Hriday", "Kaleja", "Mann"],
-        "bg": "#7B3FA8",
-        "fg": "#fff"
+        "bg": "#CECBF6",
+        "fg": "#3C3489"
       }
     ]
   },
   {
     "title": "Puzzle 2",
     "titleEn": "Puzzle 2",
-    "emoji": "🧆",
     "categories": [
       {
         "name": "Traditional Indian cold drinks",
         "hindi": "ठंडे पारंपरिक पेय",
         "items": ["Lassi", "Chaach", "Thandai", "Sharbat"],
-        "bg": "#C8961A",
-        "fg": "#3A2000"
+        "bg": "#FAC775",
+        "fg": "#633806"
       },
       {
         "name": "Fried Indian foods",
         "hindi": "तला हुआ खाना",
         "items": ["Samosa", "Pakora", "Kachori", "Bhatura"],
-        "bg": "#4D9A2E",
-        "fg": "#fff"
+        "bg": "#9FE1CB",
+        "fg": "#085041"
       },
       {
         "name": "Milk-based Indian desserts",
         "hindi": "दूध से बनी मिठाइयाँ",
         "items": ["Kheer", "Rasmalai", "Rabri", "Payasam"],
-        "bg": "#2B5EC7",
-        "fg": "#fff"
+        "bg": "#B5D4F4",
+        "fg": "#0C447C"
       },
       {
         "name": "Made by curdling or straining milk",
         "hindi": "दूध फाड़कर या छानकर बनाए जाते हैं",
         "items": ["Paneer", "Dahi", "Chenna", "Shrikhand"],
-        "bg": "#7B3FA8",
-        "fg": "#fff"
+        "bg": "#CECBF6",
+        "fg": "#3C3489"
       }
     ]
   },
   {
     "title": "Puzzle 3",
     "titleEn": "Puzzle 3",
-    "emoji": "🎨",
     "categories": [
       {
         "name": "Hindi words that are purely COLORS",
         "hindi": "रंगों के शुद्ध नाम हैं (बस)",
         "items": ["Laal", "Peeli", "Neeli", "Hari"],
-        "bg": "#C8961A",
-        "fg": "#3A2000"
+        "bg": "#FAC775",
+        "fg": "#633806"
       },
       {
         "name": "Mean DARKNESS or NIGHT in Hindi",
         "hindi": "अंधेरे / रात के लिए हिंदी शब्द",
         "items": ["Kali", "Raat", "Andhera", "Nisha"],
-        "bg": "#4D9A2E",
-        "fg": "#fff"
+        "bg": "#9FE1CB",
+        "fg": "#085041"
       },
       {
         "name": "Indian girl names that also literally mean something",
         "hindi": "लड़कियों के नाम जिनका मतलब भी है",
         "items": ["Asha", "Kiran", "Rani", "Rekha"],
-        "bg": "#2B5EC7",
-        "fg": "#fff"
+        "bg": "#B5D4F4",
+        "fg": "#0C447C"
       },
       {
         "name": "Represent WEALTH or PRECIOUS things",
         "hindi": "दौलत / कीमती चीज़ें दर्शाते हैं",
         "items": ["Lakshmi", "Heera", "Sona", "Chandi"],
-        "bg": "#7B3FA8",
-        "fg": "#fff"
+        "bg": "#CECBF6",
+        "fg": "#3C3489"
       }
     ]
   },
   {
     "title": "Puzzle 4",
     "titleEn": "Puzzle 4",
-    "emoji": "🎉",
     "categories": [
       {
         "name": "Things you find at HOLI",
         "hindi": "होली में इस्तेमाल होने वाली चीज़ें",
         "items": ["Gulal", "Pichkari", "Gujiya", "Abeer"],
-        "bg": "#C8961A",
-        "fg": "#3A2000"
+        "bg": "#FAC775",
+        "fg": "#633806"
       },
       {
         "name": "Things you find at DIWALI",
         "hindi": "दिवाली में इस्तेमाल होने वाली चीज़ें",
         "items": ["Diya", "Patakha", "Kheel", "Rangoli"],
-        "bg": "#4D9A2E",
-        "fg": "#fff"
+        "bg": "#9FE1CB",
+        "fg": "#085041"
       },
       {
         "name": "Things you find at EID",
         "hindi": "ईद में इस्तेमाल होने वाली चीज़ें",
         "items": ["Seviyan", "Mehendi", "Itar", "Chaand"],
-        "bg": "#2B5EC7",
-        "fg": "#fff"
+        "bg": "#B5D4F4",
+        "fg": "#0C447C"
       },
       {
         "name": "Things you find at MAKAR SANKRANTI",
         "hindi": "मकर संक्रांति में इस्तेमाल होने वाली चीज़ें",
         "items": ["Patang", "Tilgul", "Rewdi", "Til"],
-        "bg": "#7B3FA8",
-        "fg": "#fff"
+        "bg": "#CECBF6",
+        "fg": "#3C3489"
       }
     ]
   },
   {
     "title": "Puzzle 5",
     "titleEn": "Puzzle 5",
-    "emoji": "🎵",
     "categories": [
       {
         "name": "Root words for DAYS OF THE WEEK in Hindi",
         "hindi": "हिंदी वार के मूल शब्द (मंगलवार, गुरुवार, शनिवार, बुधवार)",
         "items": ["Mangal", "Shani", "Guru", "Budh"],
-        "bg": "#C8961A",
-        "fg": "#3A2000"
+        "bg": "#FAC775",
+        "fg": "#633806"
       },
       {
         "name": "Names that literally mean a FEELING or STATE",
         "hindi": "नाम जिनका मतलब एक भावना है",
         "items": ["Asha", "Anand", "Vivek", "Uday"],
-        "bg": "#4D9A2E",
-        "fg": "#fff"
+        "bg": "#9FE1CB",
+        "fg": "#085041"
       },
       {
         "name": "Basic MATHS OPERATIONS in Sanskrit",
         "hindi": "संस्कृत में गणित के बुनियादी शब्द",
         "items": ["Yoga", "Guna", "Vibhajan", "Shunya"],
-        "bg": "#2B5EC7",
-        "fg": "#fff"
+        "bg": "#B5D4F4",
+        "fg": "#0C447C"
       },
       {
         "name": "Hindustani classical RAGAS",
         "hindi": "हिंदुस्तानी शास्त्रीय संगीत के राग",
         "items": ["Bhairav", "Malhar", "Kafi", "Mand"],
-        "bg": "#7B3FA8",
-        "fg": "#fff"
+        "bg": "#CECBF6",
+        "fg": "#3C3489"
       }
     ]
-  }
+  },
+  {
+  "title": "Puzzle 6",
+  "titleEn": "Puzzle 6",
+  "categories": [
+    {
+      "name": "Synonyms for 'young / adolescent boy'",
+      "hindi": "युवा / किशोर के पर्यायवाची",
+      "items": ["Kishore", "Kumar", "Yuva", "Balak"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "___ Kumar",
+      "hindi": "___ कुमार",
+      "items": ["Dilip", "Manoj", "Hemant", "Ashok"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Words meaning 'garden'",
+      "hindi": "'बगीचे' के अर्थ वाले शब्द",
+      "items": ["Gulshan", "Gulzar", "Udyan", "Vatika"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Words meaning 'eternal / imperishable'",
+      "hindi": "'शाश्वत / अमर' के अर्थ वाले शब्द",
+      "items": ["Akshay", "Amar", "Anant", "Sanatan"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
+},
+{
+  "title": "Puzzle 7",
+  "titleEn": "Puzzle 7",
+  "categories": [
+    {
+      "name": "Types of Masala",
+      "hindi": "मसाले के प्रकार",
+      "items": ["Chaat", "Paan", "Tikka", "Tandoori"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Types of Chai",
+      "hindi": "चाय के प्रकार",
+      "items": ["Masala", "Adrak", "Kadak", "Irani"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Types of Achar",
+      "hindi": "अचार के प्रकार",
+      "items": ["Aam", "Mirch", "Lahsun", "Gobhi"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "___ Pani",
+      "hindi": "___ पानी",
+      "items": ["Kala", "Chai", "Garam", "Nimbu"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
+},
+{
+  "title": "Puzzle 8",
+  "titleEn": "Puzzle 8",
+  "categories": [
+    {
+      "name": "Indian spices",
+      "hindi": "भारतीय मसाले",
+      "items": ["Elaichi", "Dalchini", "Kesar", "Ajwain"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "String instruments",
+      "hindi": "तार वाले वाद्य यंत्र",
+      "items": ["Veena", "Sarod", "Tanpura", "Santoor"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Ancient Indian centres of learning",
+      "hindi": "प्राचीन भारतीय शिक्षा केंद्र",
+      "items": ["Taxila", "Vikramashila", "Valabhi", "Odantapuri"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Starts with a Ramayana character's name",
+      "hindi": "रामायण के किसी पात्र के नाम से शुरू होते हैं",
+      "items": ["Sitar", "Balidaan", "Nalanda", "Lavang"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
+}
 ]
