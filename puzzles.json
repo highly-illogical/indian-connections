@@ -210,7 +210,7 @@
     {
       "name": "Types of Masala",
       "hindi": "मसाले के प्रकार",
-      "items": ["Chaat", "Paan", "Tikka", "Tandoori"],
+      "items": ["Chaat", "Paan", "Biryani", "Tandoori"],
       "bg": "#FAC775",
       "fg": "#633806"
     },
