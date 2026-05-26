@@ -270,5 +270,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 9",
+  "titleEn": "Puzzle 9",
+  "categories": [
+    {
+      "name": "Gandhi-Nehru family (first name)",
+      "hindi": "गांधी-नेहरू परिवार (पहला नाम)",
+      "items": ["Indira", "Rajiv", "Sanjay", "Priyanka"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "India cricket captains (first name)",
+      "hindi": "भारतीय क्रिकेट कप्तान (पहला नाम)",
+      "items": ["Rahul", "Sourav", "Kapil", "Virat"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Hindi poets (pen names)",
+      "hindi": "हिंदी कवि (उपनाम)",
+      "items": ["Nirala", "Dinkar", "Bachchan", "Agyeya"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Directors associated with Phantom Films",
+      "hindi": "फैंटम फिल्म्स से जुड़े निर्देशक",
+      "items": ["Anurag", "Vikramaditya", "Vikas", "Neeraj"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
