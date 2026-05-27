@@ -304,5 +304,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 10",
+  "titleEn": "Puzzle 10",
+  "categories": [
+    {
+      "name": "___ Singh",
+      "hindi": "___ सिंह",
+      "items": ["Manmohan", "Bhagat", "Harbhajan", "Dara"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Dalit politicians",
+      "hindi": "दलित राजनेता",
+      "items": ["Ambedkar", "Kanshi Ram", "Mayawati", "Ravan"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Indian cartoonists",
+      "hindi": "भारतीय कार्टूनिस्ट",
+      "items": ["Laxman", "Pran", "Shankar", "Mario"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "___ phal",
+      "hindi": "___ फल",
+      "items": ["Ram", "Sita", "Jai", "Pani"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
