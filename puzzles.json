@@ -338,5 +338,107 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 11",
+  "titleEn": "Puzzle 11",
+  "categories": [
+    {
+      "name": "Indian trees",
+      "hindi": "भारतीय पेड़",
+      "items": ["Ashoka", "Peepal", "Neem", "Sheesham"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Sons of Kunti",
+      "hindi": "कुंती के पुत्र",
+      "items": ["Yudhishthira", "Bhima", "Arjuna", "Karna"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Indian awards",
+      "hindi": "भारतीय पुरस्कार",
+      "items": ["Padma", "Dronacharya", "Dadasaheb Phalke", "Sahitya Akademi"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Names meaning lotus",
+      "hindi": "कमल के पर्यायवाची",
+      "items": ["Pankaj", "Arvind", "Kamala", "Saroj"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
+},
+{
+  "title": "Puzzle 12",
+  "titleEn": "Puzzle 12",
+  "categories": [
+    {
+      "name": "Wildlife sanctuaries",
+      "hindi": "वन्यजीव अभयारण्य",
+      "items": ["Corbett", "Ranthambore", "Kaziranga", "Sundarbans"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Avatars of Vishnu",
+      "hindi": "विष्णु के अवतार",
+      "items": ["Matsya", "Varaha", "Narasimha", "Vamana"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "South Indian rivers",
+      "hindi": "दक्षिण भारत की नदियाँ",
+      "items": ["Krishna", "Kaveri", "Godavari", "Periyar"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Places in Gujarat",
+      "hindi": "गुजरात के स्थान",
+      "items": ["Dwarka", "Gir", "Sabarmati", "Lothal"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
+},
+{
+  "title": "Puzzle 13",
+  "titleEn": "Puzzle 13",
+  "categories": [
+    {
+      "name": "Associated with Mahatma Gandhi",
+      "hindi": "महात्मा गांधी से जुड़े",
+      "items": ["Chashma", "Lathi", "Charkha", "Namak"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Colours of the Indian flag",
+      "hindi": "भारतीय ध्वज के रंग",
+      "items": ["Kesari", "Safed", "Hara", "Neela"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Left / revolutionary movement",
+      "hindi": "वामपंथी / क्रांतिकारी आंदोलन",
+      "items": ["Inquilab", "Laal", "Mazdoor", "Kisaan"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Independence-era Indian newspapers",
+      "hindi": "स्वतंत्रता युग के भारतीय समाचारपत्र",
+      "items": ["Harijan", "Yugantar", "Mahratta", "Navjivan"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
