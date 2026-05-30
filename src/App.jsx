@@ -20,6 +20,14 @@ const DIFF_LABELS = [
   { label: "🟣 Bahut Mushkil", bg: "#CECBF6", fg: "#3C3489" },
 ];
 
+// Mid-tone versions of each pastel: brighter than bg, lighter than fg
+const BG_TO_MID = {
+  "#FAC775": "#F5A623",
+  "#9FE1CB": "#3DBD9A",
+  "#B5D4F4": "#5B9FE4",
+  "#CECBF6": "#9B8FEA",
+};
+
 const EPOCH = new Date(2026, 4, 19); // May 19 2026 → puzzle 4 lands on May 22
 
 function getTodayPuzzleIdx() {
@@ -27,6 +35,23 @@ function getTodayPuzzleIdx() {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const days = Math.floor((today - EPOCH) / (1000 * 60 * 60 * 24));
   return ((days % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
+}
+
+// ─── PERSISTENCE ─────────────────────────────────────────────────────────────
+
+const STORAGE_KEY = "knnections_progress";
+
+function loadAllProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch { return {}; }
+}
+
+function savePuzzleProgress(pidx, state) {
+  try {
+    const all = loadAllProgress();
+    all[pidx] = state;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  } catch {}
 }
 
 // ─── GLOBAL CSS ──────────────────────────────────────────────────────────────
@@ -152,6 +177,7 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [won, setWon] = useState(false);
   const [guessHistory, setGuessHistory] = useState([]);
+  const [returnTo, setReturnTo] = useState("home");
 
   const puzzle = PUZZLES[pidx];
   const MAX_ERR = 4;
@@ -163,9 +189,44 @@ export default function App() {
     setTimeout(() => setToast(null), 2600);
   }
 
-  function startGame(i) {
+  function startGame(i, from = "home") {
+    const all = loadAllProgress();
+    const saved = all[i];
+    setReturnTo(from);
+
+    if (saved && (saved.status === "won" || saved.status === "lost")) {
+      // Already finished — show the end screen with saved results
+      setPidx(i);
+      setTiles(saved.tiles);
+      setSolved(saved.solved);
+      setMistakes(saved.mistakes);
+      setGuessHistory(saved.guessHistory);
+      setWon(saved.status === "won");
+      setAnim(null);
+      setToast(null);
+      setScreen("end");
+      return;
+    }
+
+    if (saved && saved.status === "playing") {
+      // Resume in-progress game
+      setPidx(i);
+      setTiles(saved.tiles);
+      setSolved(saved.solved);
+      setMistakes(saved.mistakes);
+      setGuessHistory(saved.guessHistory);
+      setSelected([]);
+      setAnim(null);
+      setToast(null);
+      setWon(false);
+      setScreen("game");
+      return;
+    }
+
+    // Fresh start
+    const shuffledTiles = shuffle(PUZZLES[i].categories.flatMap(c => c.items));
     setPidx(i);
-    setTiles(shuffle(PUZZLES[i].categories.flatMap(c => c.items)));
+    setTiles(shuffledTiles);
     setSelected([]);
     setSolved([]);
     setMistakes(0);
@@ -173,6 +234,7 @@ export default function App() {
     setToast(null);
     setWon(false);
     setGuessHistory([]);
+    savePuzzleProgress(i, { tiles: shuffledTiles, solved: [], mistakes: 0, guessHistory: [], status: "playing" });
     setScreen("game");
   }
 
@@ -186,7 +248,8 @@ export default function App() {
   function submit() {
     if (selected.length !== 4 || anim) return;
     const guess = [...selected];
-    setGuessHistory(h => [...h, guess]);
+    const newHistory = [...guessHistory, guess];
+    setGuessHistory(newHistory);
     const match = puzzle.categories.find(c =>
       selected.every(s => c.items.includes(s)) && c.items.every(i => selected.includes(i))
     );
@@ -197,8 +260,12 @@ export default function App() {
         const ns = [...solved, match];
         setSolved(ns);
         setSelected([]);
-        if (ns.length === 4) { setWon(true); setScreen("end"); }
-        else {
+        if (ns.length === 4) {
+          savePuzzleProgress(pidx, { tiles, solved: ns, mistakes, guessHistory: newHistory, status: "won" });
+          setWon(true);
+          setScreen("end");
+        } else {
+          savePuzzleProgress(pidx, { tiles, solved: ns, mistakes, guessHistory: newHistory, status: "playing" });
           const msgs = ["Wah wah! 🎉", "Bilkul sahi! ✨", "Bahut achha! 🙌"];
           showToast(msgs[ns.length - 1] || "Sahi! 🎊", true);
         }
@@ -217,7 +284,12 @@ export default function App() {
       setTimeout(() => {
         setAnim(null);
         setSelected([]);
-        if (nm >= MAX_ERR) setTimeout(() => { setWon(false); setScreen("end"); }, 420);
+        if (nm >= MAX_ERR) {
+          savePuzzleProgress(pidx, { tiles, solved, mistakes: nm, guessHistory: newHistory, status: "lost" });
+          setTimeout(() => { setWon(false); setScreen("end"); }, 420);
+        } else {
+          savePuzzleProgress(pidx, { tiles, solved, mistakes: nm, guessHistory: newHistory, status: "playing" });
+        }
       }, 660);
     }
   }
@@ -234,81 +306,112 @@ export default function App() {
   };
 
   // ─── HOME ─────────────────────────────────────────────────────────────────
-  if (screen === "home") return (
-    <>
-      <style>{CSS}</style>
-      <div style={{ ...base, justifyContent: "center" }}>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h1 style={{ fontFamily: "'Yatra One', cursive", fontSize: 72, color: "#8B1A1A", margin: "0 0 16px", lineHeight: 1 }}>
-            कnnecशns
-          </h1>
-          <p style={{ color: "#7A5C30", fontSize: 16, maxWidth: 460, margin: "0 auto", lineHeight: 1.75 }}>
-            16 tiles, 4 chhuppe groups. Lekin <b>bahut saare words do jagah fit lagte hain</b> — wahi toh maza hai!
-          </p>
-        </div>
+  if (screen === "home") {
+    const progress = loadAllProgress();
+    const todayStatus = progress[todayIdx]?.status;
+    const todayLabel =
+      todayStatus === "won" ? "Dekho Result 🎊" :
+      todayStatus === "lost" ? "Dekho Result 😔" :
+      todayStatus === "playing" ? "Jaari Rakho ▶" :
+      "Khelo ▶";
+    return (
+      <>
+        <style>{CSS}</style>
+        <div style={{ ...base, justifyContent: "center" }}>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <h1 style={{ fontFamily: "'Yatra One', cursive", fontSize: 72, color: "#8B1A1A", margin: "0 0 16px", lineHeight: 1 }}>
+              कnnecशns
+            </h1>
+            <p style={{ color: "#7A5C30", fontSize: 16, maxWidth: 460, margin: "0 auto", lineHeight: 1.75 }}>
+              16 tiles, 4 chhuppe groups. Lekin <b>bahut saare words do jagah fit lagte hain</b> — wahi toh maza hai!
+            </p>
+          </div>
 
-        <div style={{ background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14, padding: "18px 28px", maxWidth: 520, width: "100%", marginBottom: 36, fontSize: 15, color: "#6B4226", lineHeight: 1.85, textAlign: "center" }}>
-          <b>Kaise khelein?</b> 4 tiles chunke <b>Submit</b> karo. Ek galati = ek 🔴 khatam. 4 galatiyan = game over!
-        </div>
+          <div style={{ background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14, padding: "18px 28px", maxWidth: 520, width: "100%", marginBottom: 36, fontSize: 15, color: "#6B4226", lineHeight: 1.85, textAlign: "center" }}>
+            <b>Kaise khelein?</b> 4 tiles chunke <b>Submit</b> karo. Ek galati = ek 🔴 khatam. 4 galatiyan = game over!
+          </div>
 
-        <div style={{ display: "flex", gap: 16, marginBottom: 36, flexWrap: "wrap", justifyContent: "center" }}>
-          <button className="pill-btn" onClick={() => startGame(todayIdx)} style={{
-            background: "#8B1A1A", color: "#FFDB80", border: "none",
-            borderRadius: 30, padding: "10px 32px", fontFamily: "'Mukta'", fontWeight: 700,
-            fontSize: 17, cursor: "pointer",
-          }}>Khelo ▶</button>
-          <button className="pill-btn" onClick={() => setScreen("archive")} style={{
-            background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
-            borderRadius: 30, padding: "10px 20px", fontFamily: "'Mukta'", fontWeight: 700,
-            fontSize: 16, cursor: "pointer",
-          }}>📚 Purane</button>
-        </div>
+          <div style={{ display: "flex", gap: 16, marginBottom: 36, flexWrap: "wrap", justifyContent: "center" }}>
+            <button className="pill-btn" onClick={() => startGame(todayIdx)} style={{
+              background: "#8B1A1A", color: "#FFDB80", border: "none",
+              borderRadius: 30, padding: "10px 32px", fontFamily: "'Mukta'", fontWeight: 700,
+              fontSize: 17, cursor: "pointer",
+            }}>{todayLabel}</button>
+            <button className="pill-btn" onClick={() => setScreen("archive")} style={{
+              background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
+              borderRadius: 30, padding: "10px 20px", fontFamily: "'Mukta'", fontWeight: 700,
+              fontSize: 16, cursor: "pointer",
+            }}>📚 Purane</button>
+          </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
-          {DIFF_LABELS.map(d => (
-            <span key={d.label} style={{ background: d.bg, borderRadius: 20, padding: "6px 16px", color: d.fg, fontSize: 13, fontWeight: 600 }}>{d.label}</span>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-
-  // ─── ARCHIVE ──────────────────────────────────────────────────────────────
-  if (screen === "archive") return (
-    <>
-      <style>{CSS}</style>
-      <div style={base}>
-        <div style={{ width: "100%", maxWidth: 520 }}>
-          <button onClick={() => setScreen("home")} style={{ background: "none", border: "none", color: "#8B1A1A", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer", padding: 0, marginBottom: 20 }}>
-            ← Wapas
-          </button>
-          <h2 style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 32, margin: "0 0 6px" }}>Purane Puzzles</h2>
-          <p style={{ color: "#7A5C30", fontSize: 15, margin: "0 0 24px" }}>Woh puzzles jo aap miss kar gaye 😄</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {PUZZLES.map((p, i) => {
-              if (!DEV && i >= todayIdx) return null;
-              return (
-                <div key={i} className="card-btn" onClick={() => startGame(i)} style={{
-                  background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14,
-                  padding: "18px 22px", cursor: "pointer", display: "flex", alignItems: "center", gap: 16,
-                }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 20, marginBottom: 4 }}>{p.titleEn}</div>
-                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                      {p.categories.map((c, j) => (
-                        <span key={j} style={{ display: "inline-block", width: 14, height: 14, borderRadius: "50%", background: c.bg }} />
-                      ))}
-                    </div>
-                  </div>
-                  <span style={{ color: "#8B1A1A", fontSize: 20, fontWeight: 700 }}>▶</span>
-                </div>
-              );
-            })}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
+            {DIFF_LABELS.map(d => (
+              <span key={d.label} style={{ background: d.bg, borderRadius: 20, padding: "6px 16px", color: d.fg, fontSize: 13, fontWeight: 600 }}>{d.label}</span>
+            ))}
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+
+  // ─── ARCHIVE ──────────────────────────────────────────────────────────────
+  if (screen === "archive") {
+    const progress = loadAllProgress();
+    return (
+      <>
+        <style>{CSS}</style>
+        <div style={base}>
+          <div style={{ width: "100%", maxWidth: 520 }}>
+            <button onClick={() => setScreen("home")} style={{ background: "none", border: "none", color: "#8B1A1A", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer", padding: 0, marginBottom: 20 }}>
+              ← Wapas
+            </button>
+            <h2 style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 32, margin: "0 0 6px" }}>Purane Puzzles</h2>
+            <p style={{ color: "#7A5C30", fontSize: 15, margin: "0 0 24px" }}>Woh puzzles jo aap miss kar gaye 😄</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {PUZZLES.map((p, i) => {
+                if (!DEV && i >= todayIdx) return null;
+                const saved = progress[i];
+                const status = saved?.status;
+                const badge =
+                  status === "won" ? { icon: "🎊", label: "Jeet!", color: "#2E7D32" } :
+                  status === "lost" ? { icon: "😔", label: "Game over", color: "#B71C1C" } :
+                  status === "playing" ? { icon: "⏸", label: `${saved.solved.length}/4`, color: "#7A5C30" } :
+                  null;
+                return (
+                  <div key={i} className="card-btn" onClick={() => startGame(i, "archive")} style={{
+                    background: "#FFF7E8", border: "1.5px solid #E8C870", borderRadius: 14,
+                    padding: "18px 22px", cursor: "pointer", display: "flex", alignItems: "center", gap: 16,
+                  }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontFamily: "'Yatra One', cursive", color: "#8B1A1A", fontSize: 20, marginBottom: 4 }}>{p.titleEn}</div>
+                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                        {p.categories.map((c, j) => {
+                          const wasSolved = saved?.solved?.some(s => s.name === c.name);
+                          return (
+                            <span key={j} style={{
+                              display: "inline-block", width: 14, height: 14, borderRadius: "50%",
+                              background: wasSolved ? (BG_TO_MID[c.bg] ?? c.bg) : c.bg,
+                            }} />
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {badge ? (
+                      <span style={{ color: badge.color, fontWeight: 700, fontSize: 15, textAlign: "right", whiteSpace: "nowrap" }}>
+                        {badge.icon} {badge.label}
+                      </span>
+                    ) : (
+                      <span style={{ color: "#8B1A1A", fontSize: 20, fontWeight: 700 }}>▶</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   // ─── END ──────────────────────────────────────────────────────────────────
   if (screen === "end") return (
@@ -341,15 +444,11 @@ export default function App() {
           </div>
 
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <button className="pill-btn" onClick={() => setScreen("home")} style={{
+            <button className="pill-btn" onClick={() => setScreen(returnTo)} style={{
               background: "transparent", color: "#8B1A1A", border: "2px solid #8B1A1A",
               borderRadius: 30, padding: "12px 26px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer",
-            }}>← Ghar Wapas</button>
+            }}>{returnTo === "archive" ? "← Wapas" : "← Ghar Wapas"}</button>
             <ShareButton puzzle={puzzle} guessHistory={guessHistory} won={won} mistakes={mistakes} showToast={showToast} />
-            <button className="pill-btn" onClick={() => startGame(pidx)} style={{
-              background: "#8B1A1A", color: "#FFDB80", border: "none",
-              borderRadius: 30, padding: "12px 28px", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer",
-            }}>Phir Khelo 🔄</button>
           </div>
         </div>
       </div>
@@ -373,7 +472,7 @@ export default function App() {
 
         {/* Header */}
         <div style={{ width: "100%", maxWidth: 640, display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-          <button onClick={() => setScreen("home")} style={{ background: "none", border: "none", color: "#8B1A1A", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer", padding: 0 }}>
+          <button onClick={() => setScreen(returnTo)} style={{ background: "none", border: "none", color: "#8B1A1A", fontFamily: "'Mukta'", fontWeight: 700, fontSize: 16, cursor: "pointer", padding: 0 }}>
             ← Wapas
           </button>
           <div style={{ textAlign: "center" }}>
