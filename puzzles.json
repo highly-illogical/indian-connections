@@ -440,5 +440,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 14",
+  "titleEn": "Puzzle 14",
+  "categories": [
+    {
+      "name": "Legendary male playback singers",
+      "hindi": "प्रसिद्ध पुरुष पार्श्वगायक",
+      "items": ["Rafi", "Kishore", "Manna", "Talat"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Words meaning 'light / brightness'",
+      "hindi": "प्रकाश / चमक के अर्थ वाले शब्द",
+      "items": ["Prakash", "Deepak", "Jyoti", "Prabha"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Words for precious stones",
+      "hindi": "कीमती पत्थरों के नाम",
+      "items": ["Ratan", "Heera", "Jawahar", "Neelam"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Indian billionaires (first name)",
+      "hindi": "भारतीय अरबपति (पहला नाम)",
+      "items": ["Kiran", "Azim", "Mukesh", "Anand"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
