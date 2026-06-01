@@ -474,5 +474,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 15",
+  "titleEn": "Puzzle 15",
+  "categories": [
+    {
+      "name": "Words meaning 'foremost / chief'",
+      "hindi": "अग्रणी / श्रेष्ठ के अर्थ वाले शब्द",
+      "items": ["Shirsha", "Pradhan", "Pramukh", "Mukhya"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Yoga asanas",
+      "hindi": "योग आसन",
+      "items": ["Shav", "Tada", "Bhujanga", "Padma"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Sanskrit words for scripture / text",
+      "hindi": "धर्मग्रंथ के संस्कृत शब्द",
+      "items": ["Shastra", "Smriti", "Shruti", "Samhita"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "KALPA + ___",
+      "hindi": "कल्प + ___",
+      "items": ["Vriksha", "Na", "Anta", "Sutra"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
