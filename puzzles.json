@@ -508,5 +508,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 16",
+  "titleEn": "Puzzle 16",
+  "categories": [
+    {
+      "name": "Bengali literary giants (first name)",
+      "hindi": "बंगाली साहित्यिक दिग्गजों के प्रथम नाम",
+      "items": ["Rabindra", "Bankim", "Sarat", "Michael"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Wrote about colonial India (last name)",
+      "hindi": "औपनिवेशिक भारत पर लिखने वाले लेखक (उपनाम)",
+      "items": ["Kipling", "Forster", "Orwell", "Mill"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "British monarchs during colonial rule (first name)",
+      "hindi": "औपनिवेशिक काल के ब्रिटिश सम्राट (प्रथम नाम)",
+      "items": ["George", "William", "Victoria", "Edward"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Governors-General of India (first name)",
+      "hindi": "भारत के गवर्नर-जनरल (प्रथम नाम)",
+      "items": ["Warren", "Charles", "Louis", "Richard"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
