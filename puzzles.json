@@ -542,5 +542,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 17",
+  "titleEn": "Puzzle 17",
+  "categories": [
+    {
+      "name": "Ramayana characters who are younger brothers",
+      "hindi": "रामायण के ऐसे पात्र जो छोटे भाई हैं",
+      "items": ["Sugriva", "Vibhishana", "Kumbhakarna", "Shatrughna"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Progressive Writers' Association figures",
+      "hindi": "प्रगतिशील लेखक संघ से जुड़े लेखक",
+      "items": ["Chughtai", "Manto", "Faiz", "Premchand"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Krishna-bhakti poets",
+      "hindi": "कृष्ण-भक्ति कवि",
+      "items": ["Surdas", "Mirabai", "Jayadeva", "Raskhan"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Consorts of Krishna",
+      "hindi": "कृष्ण की पत्नियाँ/सहचरियाँ",
+      "items": ["Radha", "Rukmini", "Kalindi", "Lakshmana"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
