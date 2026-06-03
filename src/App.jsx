@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import PUZZLES from "../puzzles.json";
 
@@ -46,11 +46,18 @@ function loadAllProgress() {
   catch { return {}; }
 }
 
+// ─── CROSS-TAB SYNC ──────────────────────────────────────────────────────────
+
+const syncChannel = typeof BroadcastChannel !== "undefined"
+  ? new BroadcastChannel("knnections_sync")
+  : null;
+
 function savePuzzleProgress(pidx, state) {
   try {
     const all = loadAllProgress();
     all[pidx] = state;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    syncChannel?.postMessage({ type: "puzzle_update", pidx, state });
   } catch {}
 }
 
@@ -178,6 +185,38 @@ export default function App() {
   const [won, setWon] = useState(false);
   const [guessHistory, setGuessHistory] = useState([]);
   const [returnTo, setReturnTo] = useState("home");
+
+  // Refs so the sync handler always sees current screen/pidx without stale closures
+  const screenRef = useRef(screen);
+  const pidxRef = useRef(pidx);
+  screenRef.current = screen;
+  pidxRef.current = pidx;
+
+  useEffect(() => {
+    if (!syncChannel) return;
+    function handleSync({ data }) {
+      if (data?.type !== "puzzle_update") return;
+      const { pidx: updPidx, state } = data;
+      if (screenRef.current !== "game" || pidxRef.current !== updPidx) return;
+      setTiles(state.tiles);
+      setSolved(state.solved);
+      setMistakes(state.mistakes);
+      setGuessHistory(state.guessHistory);
+      setSelected([]);
+      if (state.status === "won") {
+        setWon(true);
+        setTimeout(() => setScreen("end"), 1200);
+      } else if (state.status === "lost") {
+        setWon(false);
+        setTimeout(() => setScreen("end"), 1200);
+      } else {
+        setToast({ text: "Doosri tab se sync ho gaya 🔄", good: true });
+        setTimeout(() => setToast(null), 2600);
+      }
+    }
+    syncChannel.addEventListener("message", handleSync);
+    return () => syncChannel.removeEventListener("message", handleSync);
+  }, []);
 
   const puzzle = PUZZLES[pidx];
   const MAX_ERR = 4;
