@@ -576,5 +576,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 18",
+  "titleEn": "Puzzle 18",
+  "categories": [
+    {
+      "name": "Bollywood actress first names",
+      "hindi": "बॉलीवुड अभिनेत्रियों के पहले नाम",
+      "items": ["Hema", "Huma", "Madhuri", "Kajol"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Opening of the preamble in Hindi",
+      "hindi": "हिंदी में संविधान की प्रस्तावना का आरंभ",
+      "items": ["Hum", "Bharat", "Ke", "Log"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Names for India",
+      "hindi": "भारत के अन्य नाम",
+      "items": ["India", "Hindustan", "Jambudvipa", "Tianzhu"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "___ alaya",
+      "hindi": "___ आलय",
+      "items": ["Him", "Bhojan", "Vidya", "Dev"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
