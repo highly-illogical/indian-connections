@@ -610,5 +610,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 19",
+  "titleEn": "Puzzle 19",
+  "categories": [
+    {
+      "name": "Hindi words for body parts",
+      "hindi": "शरीर के अंग",
+      "items": ["Nak", "Aankh", "Haath", "Munh"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Characters from Sholay",
+      "hindi": "शोले के किरदार",
+      "items": ["Gabbar", "Veeru", "Basanti", "Thakur"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Associated with Shiva",
+      "hindi": "शिव से जुड़े",
+      "items": ["Trishul", "Damru", "Nandi", "Bhasma"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "___ pur",
+      "hindi": "___ पुर",
+      "items": ["Jai", "Kan", "Nag", "Ram"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
