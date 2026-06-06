@@ -644,5 +644,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 20",
+  "titleEn": "Puzzle 20",
+  "categories": [
+    {
+      "name": "Words for soldier / warrior",
+      "hindi": "सैनिक के पर्यायवाची",
+      "items": ["Sainik", "Sipahi", "Fauji", "Yoddha"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Fought on the Pandava side",
+      "hindi": "पांडव पक्ष से लड़े",
+      "items": ["Yudhishthira", "Arjun", "Ghatotkacha", "Shikhandi"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Jai ___",
+      "hindi": "जय ___",
+      "items": ["Bhim", "Hind", "Jawan", "Jagannath"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Associated with 'Uttar'",
+      "hindi": "'उत्तर' से जुड़े",
+      "items": ["Pradesh", "Kanda", "Abhimanyu", "Prashna"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
