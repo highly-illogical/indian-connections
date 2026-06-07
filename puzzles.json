@@ -678,5 +678,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 21",
+  "titleEn": "Puzzle 21",
+  "categories": [
+    {
+      "name": "Famous Tagores",
+      "hindi": "प्रसिद्ध टैगोर",
+      "items": ["Rabindranath", "Abanindranath", "Gaganendranath", "Sharmila"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Famous Boses",
+      "hindi": "प्रसिद्ध बोस",
+      "items": ["Subhas", "Jagadish", "Nandalal", "Satyendra"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Famous Roys",
+      "hindi": "प्रसिद्ध रॉय",
+      "items": ["Jamini", "Arundhati", "Bimal", "Manabendra"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Progressive Artists' Group (first name)",
+      "hindi": "प्रगतिशील कलाकार समूह (पहला नाम)",
+      "items": ["Maqbool", "Syed", "Francis", "Tyeb"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
