@@ -28,13 +28,8 @@ const BG_TO_MID = {
   "#CECBF6": "#9B8FEA",
 };
 
-const EPOCH = new Date(2026, 4, 19); // May 19 2026 → puzzle 4 lands on May 22
-
 function getTodayPuzzleIdx() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const days = Math.floor((today - EPOCH) / (1000 * 60 * 60 * 24));
-  return ((days % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
+  return PUZZLES.length - 1;
 }
 
 // ─── PERSISTENCE ─────────────────────────────────────────────────────────────
