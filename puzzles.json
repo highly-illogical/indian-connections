@@ -712,5 +712,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 22",
+  "titleEn": "Puzzle 22",
+  "categories": [
+    {
+      "name": "Bollywood actresses (first name)",
+      "hindi": "बॉलीवुड अभिनेत्रियाँ (पहला नाम)",
+      "items": ["Raveena", "Karisma", "Urmila", "Manisha"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "___ Shastra",
+      "hindi": "___ शास्त्र",
+      "items": ["Artha", "Dharma", "Vastu", "Shilpa"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "___ Sutra(s)",
+      "hindi": "___ सूत्र",
+      "items": ["Brahma", "Yoga", "Kama", "Shiva"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "First word of an Indian name for Snakes and Ladders",
+      "hindi": "साँप-सीढ़ी के एक भारतीय नाम का पहला शब्द",
+      "items": ["Moksha", "Gyan", "Paramapada", "Saanp"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
