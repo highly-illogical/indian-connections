@@ -746,5 +746,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle: Father's Day",
+  "titleEn": "Puzzle: Father's Day",
+  "categories": [
+    {
+      "name": "Informal words for father in Indian languages",
+      "hindi": "भारतीय भाषाओं में पिता के लिए अनौपचारिक शब्द",
+      "items": ["Abbu", "Bab", "Nanna", "Papa"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Indian movie titles that are words for father",
+      "hindi": "भारतीय फ़िल्मों के शीर्षक जो पिता के लिए शब्द हैं",
+      "items": ["Paa", "Daddy", "Baabul", "Pitaah"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Formal words for father in Indian languages",
+      "hindi": "भारतीय भाषाओं में पिता के लिए औपचारिक शब्द",
+      "items": ["Walid", "Thagappan", "Moul", "Tandri"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "\"Father\" nicknames for famous Indian men",
+      "hindi": "प्रसिद्ध भारतीय पुरुषों के लिए \"पिता\" उपनाम",
+      "items": ["Bapu", "Thanthai", "Babuji", "Babasaheb"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
