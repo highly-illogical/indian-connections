@@ -780,5 +780,39 @@
       "fg": "#3C3489"
     }
   ]
+},
+{
+  "title": "Puzzle 24",
+  "titleEn": "Puzzle 24",
+  "categories": [
+    {
+      "name": "Delhi Metro Blue Line Nagar stations",
+      "hindi": "दिल्ली मेट्रो ब्लू लाइन के नगर स्टेशन",
+      "items": ["Patel", "Subhash", "Laxmi", "Tilak"],
+      "bg": "#FAC775",
+      "fg": "#633806"
+    },
+    {
+      "name": "Delhi Metro Red Line Nagar stations",
+      "hindi": "दिल्ली मेट्रो रेड लाइन के नगर स्टेशन",
+      "items": ["Pratap", "Shastri", "Shaheed", "Mohan"],
+      "bg": "#9FE1CB",
+      "fg": "#085041"
+    },
+    {
+      "name": "Freedom fighters with Delhi Metro Pink Line stations named after them",
+      "hindi": "स्वतंत्रता सेनानी जिनके नाम पर दिल्ली मेट्रो पिंक लाइन के स्टेशन हैं",
+      "items": ["Netaji", "Bhikaji", "Sarojini", "Durgabai"],
+      "bg": "#B5D4F4",
+      "fg": "#0C447C"
+    },
+    {
+      "name": "Indian independence martyrs",
+      "hindi": "भारतीय स्वतंत्रता संग्राम के शहीद",
+      "items": ["Bhagat", "Lajpat", "Khudiram", "Matangini"],
+      "bg": "#CECBF6",
+      "fg": "#3C3489"
+    }
+  ]
 }
 ]
